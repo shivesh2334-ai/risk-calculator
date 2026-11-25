@@ -1,0 +1,1 @@
+{ "name": "risk-calculator-tests", "private": true, "scripts": { "test": "node run.js" }, "devDependencies": { "jsdom": "^26.0.0" } }
