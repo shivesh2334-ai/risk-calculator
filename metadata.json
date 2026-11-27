@@ -1,0 +1,5 @@
+{
+  "name": "India Lifetime Cardiovascular Risk",
+  "description": "Clinician decision-support prototype: LAI 2023 cardiovascular risk tier with QRISK3-lifetime, legacy ACC and PREVENT reference estimates for Indian adults.",
+  "requestFramePermissions": []
+}

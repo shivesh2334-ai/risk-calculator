@@ -1,189 +1,1256 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Clinician decision-support prototype: LAI 2023 cardiovascular risk tier with QRISK3-lifetime, legacy ACC and PREVENT reference estimates for Indian adults."><meta name="theme-color" content="#103943"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E"><title>India Lifetime Cardiovascular Risk | Lipid Clinical Companion</title>
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-<style>
-:root{font:16px/1.55 system-ui;color:#132f37;background:#edf4f3}*{box-sizing:border-box}body{margin:0}header{background:#103943;color:white;padding:2.5rem max(5vw,calc((100vw - 1120px)/2))}h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.04;margin:.3rem 0 1rem}header p{max-width:65ch;color:#deefed}main{max-width:1160px;margin:auto;padding:1.5rem;display:grid;grid-template-columns:1.4fr 1fr;gap:1.25rem;align-items:start}section,details{background:white;border:1px solid #c9dcd9;border-radius:14px;padding:1.15rem;margin-bottom:1rem}h2,h3{margin:.1rem 0 .8rem}p{margin:.65rem 0}summary{font-weight:700;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem}label{display:block;font-size:.92rem;font-weight:620}input,select{display:block;width:100%;padding:.55rem;margin-top:.25rem;border:1px solid #789c9c;border-radius:6px;background:white;color:#132f37;font:inherit}input[type=checkbox]{display:inline;width:auto;margin-right:.5rem}button{background:#0b655f;color:white;border:0;border-radius:8px;padding:.65rem 1rem;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#d4e9e5;color:#153f42}a{color:#09625e}small,.muted{color:#456269}.tier{font-size:1.8rem;font-weight:800;color:#0b655f}.alert{background:#fff3da;padding:.7rem;border-radius:7px}ul{padding-left:1.25rem}aside{min-width:0}@media(max-width:760px){main{grid-template-columns:1fr;padding:1rem}}@media(max-width:375px){.grid{grid-template-columns:1fr}}@media print{header{color:black;background:white;padding:0}header p{color:black}main{display:block}form,button,details{display:none}}
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}footer{max-width:1160px;margin:0 auto;padding:0 1.5rem 2rem;color:#456269;font-size:.88rem}
-</style></head><body>
-<header><div>Lipid Clinical Companion</div><h1>India Lifetime<br>Cardiovascular Risk</h1><p>Assess the LAI risk tier and review long-term estimates from their original models. Clinician review prototype for Indian adults.</p><p class="alert"><strong>Clinical release on HOLD.</strong> Use synthetic profiles for validation only.</p></header>
-<noscript><p class="alert">This calculator needs JavaScript. Download this HTML file and open it in a browser with JavaScript enabled if the preview only shows the page headings.</p></noscript><main><form id="form"><section><h2>Clinical profile</h2><div class="grid" id="profile"></div></section>
-<details open><summary>LAI risk enhancers and vascular imaging</summary><p class="muted">Enter confirmed findings. Leave unavailable measurements blank.</p><div class="grid" id="enhancers"></div></details>
-<details open><summary>Published model results</summary><p>Open the <a href="https://qrisk.org/lifetime/" target="_blank" rel="noopener noreferrer">official QRISK3-lifetime calculator</a>, select Indian ethnicity when appropriate, leave UK postcode blank if unknown, and enter its current-profile result and end age here. QRISK3-lifetime estimates CVD risk using a UK-derived model. Its Indian ethnicity option does not establish calibration in India.</p><p>For comparison, use the <a href="https://tools.acc.org/ascvd-risk-estimator/" target="_blank" rel="noopener noreferrer">legacy ACC estimator</a> to cross-check the local lifetime result, or use the <a href="https://tools.acc.org/cvd-risk-estimator-plus/" target="_blank" rel="noopener noreferrer">ACC PREVENT estimator</a>. Enter PREVENT-ASCVD results for the indicated horizons.</p><div class="grid" id="references"></div></details>
-<button type="submit">Assess risk</button> <button type="button" class="secondary" id="example">Load example</button> <button type="reset" class="secondary">Reset</button></form>
-<aside><section id="output" aria-live="polite"><h2>Assessment</h2><p>Enter a clinical profile or load an example.</p></section>
-<details><summary>Implementation and validation plan</summary><ol><li>Use LAI Consensus IV Figures 1–2 for categorical stratification. Apply the highest supported tier and show the triggering findings. Preserve missing inputs and unclassified source boundaries for review.</li><li>Calculate the legacy ACC risk-factor reference locally. Record QRISK3-lifetime and PREVENT results from their official tools with outcome, model and horizon. ACC legacy lifetime is a US age-50 risk-factor profile reference. ACC/AHA 2026 uses PREVENT-ASCVD for 10-year and, where eligible, 30-year estimates. QRISK3-lifetime includes a selectable end age.</li><li>Before clinical rollout, have two clinicians adjudicate borderline and overlapping rules, compare reference entries against official calculators and audit multiple treatment and imaging scenarios.</li><li>To develop a numeric India-specific lifetime probability, use longitudinal Indian cohorts with adjudicated first ASCVD events and competing non-ASCVD death. Prespecify horizons and eligible ages, account for censoring and competing death, validate across Indian regions and sexes, and report calibration, discrimination and clinical utility before deployment.</li></ol><p>Sources: <a href="https://doi.org/10.1016/j.jacl.2024.01.006">LAI Consensus IV</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/39163073/">LAI key messages</a> · <a href="https://professional.heart.org/en/guidelines-and-statements/prevent-calculator">AHA PREVENT</a> · <a href="https://qrisk.org/lifetime/">QRISK3-lifetime</a> · <a href="https://tools.acc.org/CVD-Risk-Estimator-Plus/">ACC legacy strata</a> · <a href="https://cme.utsouthwestern.edu/sites/default/files/em1610e_100716_protocol_abdullah.pdf">Legacy reference table</a></p><p>Prototype v1.1. Calculations stay in this page. Opening a reference link takes you to the publisher’s calculator.</p></details></aside></main>
-<footer><p><strong>For clinician use only.</strong> Decision-support prototype that does not replace clinical judgement, the source publications or the official calculators. Entered values are processed in your browser and are not stored or transmitted by this page.</p></footer>
-<script>
-const yn = ['Unknown','No','Yes'];
-const profile = [
- ['age','Age (years)',18,120],['sex','Sex used by source models',['Select','Female','Male']],
- ['sbp','Office systolic BP (mmHg)',60,300],['dbp','Office diastolic BP (mmHg)',30,200],
- ['bp','Antihypertensive treatment',yn],['statin','Cholesterol-lowering treatment',yn],
- ['tobacco','Current tobacco use (including smokeless)',yn],['smoke','Current smoking (combustible)',yn],
- ['dm','Diabetes',yn],['tod','Diabetes with target-organ damage',yn],
- ['tc','Total cholesterol (mg/dL)',40,1500],['hdl','HDL-C (mg/dL)',5,250],
- ['ldl','LDL-C (mg/dL)',0,1200],['ascvd','Clinical ASCVD',yn]
-];
-const enhancers = [
- ['plaque','Carotid, femoral or coronary plaque, or ABI <0.9',yn],
- ['fh','Familial hypercholesterolaemia',['Unknown','No','Heterozygous','Homozygous']],
- ['recurrent','Recurrent ACS or polyvascular disease',yn],['catc','Recurrent ASCVD despite LDL-C around 30 mg/dL',yn],
- ['family','Premature ASCVD in first-degree relative¹',yn],['ckd','CKD stage 3b or 4',yn],
- ['met','Metabolic syndrome',yn],['liver','Fatty liver with stage 2 or 3 fibrosis',yn],
- ['heavy','Regular smoking >1 pack/day',yn],['apo','ApoB (mg/dL)',0,500],
- ['lpa','Lp(a) (mg/dL only)',0,600],['cac','CAC (Agatston, blank if untested)',0,100000],
- ['pct','CAC percentile (if CAC 1–99)',0,100],
- ['mod','Any other LAI risk modifier²',yn]
-];
-const refs = [
- ['qr','QRISK3-lifetime CVD (%)',0,100],['end','QRISK end age',26,100],
- ['p10','PREVENT-ASCVD 10-year (%)',0,100],
- ['p30','PREVENT-ASCVD 30-year (%)',0,100]
-];
-const form = document.querySelector('#form');
-const output = document.querySelector('#output');
-function fields(id, rows) {
- const holder = document.getElementById(id);
- for (const [name,title,min,max] of rows) {
-  const label = document.createElement('label');
-  label.textContent = title;
-  const choices = Array.isArray(min);
-  const control = document.createElement(choices ? 'select' : 'input');
-  control.name = name;
-  if (choices) min.forEach((option,index) => control.add(new Option(option,index || '')));
-  else Object.assign(control,{type:'number',min,max,step:['age','end'].includes(name) ? '1' : 'any',inputMode:['age','end'].includes(name) ? 'numeric' : 'decimal'});
-  label.append(control);
-  holder.append(label);
- }
-}
-fields('profile',profile);
-fields('enhancers',enhancers);
-fields('references',refs);
-document.querySelector('#enhancers').insertAdjacentHTML('afterend','<p><small>¹ Male relative &lt;55, female relative &lt;65 or before menopause. ² Review confirmed impaired fasting glucose, increased waist, hsCRP, triglycerides, inflammatory disease, reproductive risk factors, polygenic risk, air pollution and HIV in Figure 1. Lp(a) is assessed separately. Use the reported mg/dL result.</small></p>');
-function evaluate(v) {
- const yes = key => v[key] === 2;
- const has = key => v[key] !== null;
- const knownDisease = yes('ascvd') || yes('plaque');
- const lowCAC = v.cac > 0 && v.cac < 100;
- const base = [['Age threshold',has('age') && has('sex') && v.age >= (v.sex===2 ? 45 : 55)],
- ['Tobacco use',yes('tobacco') || yes('smoke') || yes('heavy')],
- ['High office BP or treatment',yes('bp') || v.sbp>=140 || v.dbp>=90],
- ['Low HDL-C',has('hdl') && has('sex') && v.hdl < (v.sex===2 ? 40 : 50)]].filter(row=>row[1]).map(row=>row[0]);
- const high = [['Premature family history',yes('family')],['CKD stage 3b or 4',yes('ckd')],
- ['ApoB >130 mg/dL',v.apo>130],['Extreme single risk factor (smoking >1 pack/day or BP >180/110 mmHg)',v.sbp>180 || v.dbp>110 || yes('heavy')],
- ['Lp(a) ≥50 mg/dL',v.lpa>=50],['Metabolic syndrome',yes('met')],['Fatty liver with stage 2–3 fibrosis',yes('liver')],
- ['CAC 1–99 below 75th percentile',lowCAC && has('pct') && v.pct<75]].filter(row=>row[1]).map(row=>row[0]);
- const nonhdl = has('tc') && has('hdl') ? v.tc-v.hdl : null;
- const modifier = yes('mod') || (v.lpa>=20 && v.lpa<50);
- const eligibleQR = v.ascvd===1 && v.age>=25 && v.age<=84 && has('qr') && v.end>v.age;
- const qr = eligibleQR ? v.qr : null;
- const flags = [];
- const missing = ['age','sex','sbp','dbp','bp','tobacco','dm','hdl','tc','ldl','ascvd'].filter(k=>!has(k));
- if (missing.length) flags.push('Core profile incomplete. Confirm ' + missing.map(k=>profile.find(row=>row[0]===k)[1]).join(', ') + '.');
- const optional = ['plaque','fh','family','ckd','met','liver','heavy','apo','lpa','mod'].filter(k=>!has(k));
- if (!has('cac')) flags.push('CAC unavailable. The assessment uses the clinical profile and any other documented vascular findings.');
- if (optional.length || (yes('dm') && !has('tod')) || (knownDisease && (!has('recurrent') || !has('catc')))) flags.push('Some LAI enhancers or disease details are unknown. The tier reflects documented findings and could rise after review.');
- if (yes('statin')) flags.push('On lipid-lowering therapy. Review pretreatment lipids if available before interpreting a low tier.');
- if (lowCAC && !has('pct')) flags.push('CAC 1–99 requires the reported percentile to distinguish the imaging tiers.');
- if (lowCAC && v.pct===75) flags.push('CAC percentile exactly 75 falls between Figure 1’s printed <75th and >75th rules. Clinician review required.');
- if (!eligibleQR && !knownDisease) flags.push('QRISK3-lifetime layer unavailable. Confirm clinical ASCVD status, eligible age and the official result with its end age.');
- if (qr!==null) flags.push('QRISK3-lifetime is shown for reference. Its end age and use in LAI tier assignment require clinical approval.');
- if (yes('catc')) flags.push('Extreme C requires specialist review of recurrence, event-time LDL-C and prior risk reduction.');
- if (qr===30) flags.push('Exactly 30% falls between Figure 1’s printed <30% and >30% rules. Clinician review required.');
- if (nonhdl>=220 && !(v.ldl>=190)) flags.push('Non-HDL-C ≥220 mg/dL without LDL-C ≥190 mg/dL falls outside the explicit Figure 1 non-HDL bands. Review directly.');
- const very = [];
- if (yes('dm') && (yes('tod') || base.length>=2)) very.push('Diabetes with organ damage or ≥2 major factors');
- if ((v.cac>=100 && v.cac<300) || (lowCAC && v.pct>75)) very.push('CAC in very-high-risk band');
- if (high.length>=2) very.push('≥2 high-risk features');
- if (v.fh===2 || v.ldl>=190) very.push('Heterozygous FH or LDL-C ≥190 mg/dL');
- const highTier = [...high];
- if (base.length>=3) highTier.push('≥3 major risk factors');
- if (v.ldl>=160 && v.ldl<190) highTier.push('LDL-C 160–189 mg/dL');
- if (nonhdl>=190 && nonhdl<220) highTier.push('Non-HDL-C 190–219 mg/dL');
- if (yes('dm') && base.length<2) highTier.push('Diabetes with 0–1 documented major factor');
- if (base.length===2 && modifier) highTier.push('Two major factors plus a risk modifier');
- const moderate = [];
- if (base.length===2) moderate.push('Two major risk factors');
- if (v.ldl>=130 && v.ldl<160) moderate.push('LDL-C 130–159 mg/dL');
- if (nonhdl>=160 && nonhdl<190) moderate.push('Non-HDL-C 160–189 mg/dL');
- const lowLipids = v.ldl>=100 && v.ldl<130 && nonhdl>=130 && nonhdl<160;
- if (base.length<=1 && lowLipids && modifier) moderate.push('Risk modifier with otherwise low-band profile');
- const tiers = [
- ['Extreme B',knownDisease && (very.length || yes('recurrent') || v.fh===3) ? [...very,...(yes('recurrent') ? ['Recurrent ACS or polyvascular disease'] : []),...(v.fh===3 ? ['Homozygous FH'] : [])] : []],
- ['Extreme A',[...(v.cac>=300 ? ['CAC ≥300'] : []),...(v.fh===3 ? ['Homozygous FH'] : []),...(knownDisease ? highTier : [])]],
- ['Very high',[...very,...(knownDisease ? ['Clinical ASCVD or qualifying plaque / ABI'] : [])]],
- ['High',highTier],['Moderate',moderate]
- ];
- const [tier,reasons] = tiers.find(row=>row[1].length) || ['Review needed',[]];
- const unresolved = lowCAC && (!has('pct') || v.pct===75) || nonhdl>=220 && !(v.ldl>=190) || yes('catc') || yes('statin');
- const provisional = tier!=='Review needed' && (missing.length>0 || optional.length>0 || unresolved || (yes('dm') && !has('tod')) || (knownDisease && (!has('recurrent') || !has('catc'))));
- if (tier==='Review needed') flags.push('No complete LAI tier was assigned from the entered profile. Review missing values and Figure 1’s lipid ranges.');
- const accReady = v.ascvd===1 && v.age>=20 && v.age<=59 && has('ldl') && v.ldl<190;
- let legacy = null;
- if (accReady && ['sex','tc','sbp','dbp','bp','statin','dm','smoke'].every(has)) {
-  const major = [v.tc>=240||yes('statin'),v.sbp>=160||v.dbp>=100||yes('bp'),yes('dm'),yes('smoke')].filter(Boolean).length;
-  const stratum = major>=2 ? 4 : major===1 ? 3 : v.tc>=200||v.sbp>=140||v.dbp>=90 ? 2 : v.tc>=180||v.sbp>=120||v.dbp>=80 ? 1 : 0;
-  const labels = ['All factors optimal','At least one nonoptimal factor','At least one elevated factor','One major factor','Two or more major factors'];
-  const estimates = v.sex===2 ? [5,36,46,50,69] : [8,27,39,39,50];
-  legacy = { percent:estimates[stratum], label:labels[stratum] };
- }
- return {tier,reasons,flags,provisional,nonhdl,base,high,modifier,legacy,qr,preventReady:v.ascvd===1 && v.plaque===1 && (v.cac===null || v.cac===0) && v.ldl>=70 && v.ldl<190 && v.age>=30 && v.age<=79};
-}
-function collect() {
- return Object.fromEntries([...new FormData(form)].map(([key,value])=>[key,value===''?null:Number(value)]));
-}
-form.addEventListener('submit', event=>{
- event.preventDefault();
- if (!form.checkValidity()) {
-  output.innerHTML='<h2>Check inputs</h2><p class="alert">Correct out-of-range values and invalid fields before assessing risk.</p>';
-  return;
- }
- const v=collect();
- const conflicts = [];
- if (v.dm!==2 && v.tod===2) conflicts.push('Diabetes with target-organ damage requires diabetes to be present.');
- if (v.ascvd!==2 && (v.recurrent===2 || v.catc===2)) conflicts.push('Recurrent ASCVD events or polyvascular disease conflict with the selected clinical ASCVD status.');
- if ((v.smoke===2 && v.tobacco===1) || (v.heavy===2 && (v.smoke===1 || v.tobacco===1))) conflicts.push('Smoking and tobacco-use answers conflict.');
- if (v.pct!==null && !(v.cac>0 && v.cac<100)) conflicts.push('Enter a CAC percentile only for a positive CAC score below 100.');
- if (v.qr!==null && (v.end===null || v.age===null || v.end<=v.age)) conflicts.push('Enter the QRISK calculation end age, which must be greater than the current age.');
- if ((v.sbp!==null && v.dbp!==null && v.dbp>=v.sbp) || (v.tc!==null && v.hdl!==null && (v.hdl>=v.tc || (v.ldl!==null && v.ldl>v.tc-v.hdl+5)))) {
-  conflicts.push('Confirm that systolic BP exceeds diastolic BP and that the lipid values are consistent and entered in mg/dL.');
- }
- if (conflicts.length) {
-  output.innerHTML='<h2>Check inputs</h2><ul class="alert">'+conflicts.map(message=>'<li>'+message+'</li>').join('')+'</ul>';
-  return;
- }
- if (v.sbp>180 || v.dbp>120) {
-  output.innerHTML='<h2>Assess severe blood pressure first</h2><p class="alert">Assess promptly for acute target-organ injury. If concerning acute symptoms or signs are present, follow the local emergency pathway. Otherwise, repeat the measurement promptly and arrange urgent clinical assessment if it remains severely elevated.</p>';
-  return;
- }
- const r=evaluate(v);
- const percent=(value,eligible)=>eligible && value!==null ? value+'%' : 'Unavailable';
- output.innerHTML=`<h2>LAI risk tier</h2><div class="tier">${r.tier}</div><p class="muted">${r.provisional?'Provisional tier based on documented findings':'Consensus category based on documented findings'}</p>
- ${r.reasons.length?'<ul>'+r.reasons.map(x=>'<li>'+x+'</li>').join('')+'</ul>':''}
- <p><strong>Major factors (${r.base.length})</strong> · ${r.base.join(', ')||'None documented'}</p>
- <p><strong>High-risk features (${r.high.length})</strong> · ${r.high.join(', ')||'None documented'}</p>
- <p><strong>Non-HDL-C</strong> · ${r.nonhdl===null?'Unavailable':Number(r.nonhdl.toFixed(1))+' mg/dL'}</p>
- ${r.flags.length?'<div class="alert"><strong>Review before interpreting</strong><ul>'+r.flags.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>':''}
- ${v.ascvd===2?'<p class="alert">Established clinical ASCVD requires a secondary-prevention review.</p>':''}
- <h3 style="margin-top:1rem">Reference estimates</h3>
- <p><strong>QRISK3-lifetime CVD</strong> · ${r.qr===null?'Unavailable':r.qr+'% to age '+v.end}</p>
- <p><strong>Legacy ACC lifetime ASCVD</strong> · ${r.legacy ? r.legacy.percent+'%' : 'Unavailable'}<br><small>US age-50 profile · ${r.legacy?.label||'Risk factor stratum unavailable'}</small></p>
- <p><strong>PREVENT-ASCVD</strong> · ${percent(v.p10,r.preventReady)} at 10 years · ${percent(v.p30,r.preventReady && v.age<=59)} at 30 years</p>
- <p><small>PREVENT comparison requires no known clinical or subclinical disease and LDL-C 70–189 mg/dL. An untested CAC may be left blank when no subclinical disease is known.</small></p>
- <p class="muted">The reference percentages describe different outcomes or time horizons. An India-calibrated lifetime probability requires longitudinal validation.</p><button type="button" onclick="window.print()">Print assessment</button>`;
-});
-form.addEventListener('invalid', () => {
- output.innerHTML='<h2>Check inputs</h2><p class="alert">Correct the highlighted fields before assessing risk.</p>';
-}, true);
-function resetOutput(){output.innerHTML='<h2>Assessment</h2><p>Enter a clinical profile or load an example.</p>';}
-form.addEventListener('reset',resetOutput);
-form.addEventListener('input',resetOutput);
-document.getElementById('example').addEventListener('click',()=>{
- form.reset();
- const example={age:42,sex:2,sbp:128,dbp:78,bp:1,statin:1,tobacco:1,smoke:1,dm:1,tod:1,tc:201,hdl:46,ldl:134,ascvd:1,plaque:1,fh:1,family:2,ckd:1,met:1,liver:1,heavy:1,apo:112,lpa:18,cac:0,mod:1};
- Object.entries(example).forEach(([name,value])=>form.elements[name].value=value);
- form.requestSubmit();
-});
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Clinician decision-support prototype: complete ASCVD (PCE, AHA PREVENT, ACC Lifetime), QRISK3-2017 + Lifetime, and LAI 2023 Consensus IV cardiovascular risk estimates for Indian adults.">
+  <meta property="og:title" content="India Lifetime Cardiovascular Risk | Lipid Clinical Companion">
+  <meta property="og:description" content="Clinician decision-support prototype calculating ASCVD, QRISK3, and LAI 2023 Consensus IV cardiovascular risk estimates.">
+  <meta name="theme-color" content="#0A5C57">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230A5C57%27/%3E%3Cpath d=%27M6 17h5l2.5-6 4 11 2.5-5H26%27 fill=%27none%27 stroke=%27white%27 stroke-width=%272.4%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+  <title>India Lifetime Cardiovascular Risk | Lipid Clinical Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F8F8;
+      --surface: #FFFFFF;
+      --surface-subtle: #EEF3F4;
+      --border: #D2DFE1;
+      --border-strong: #A7BEC2;
+      --ink: #0E2328;
+      --ink-secondary: #39545B;
+      --ink-muted: #587178;
+      --accent: #0A5C57;
+      --accent-hover: #084A46;
+      --accent-soft: #E6F2F1;
+      --tone-low: #0F766E;
+      --tone-moderate: #B45309;
+      --tone-high: #C2410C;
+      --tone-very-high: #B91C1C;
+      --tone-extreme: #7F1D1D;
+      --danger-bg: #FEF2F2;
+      --danger-border: #FECACA;
+      --danger-ink: #991B1B;
+      --advisory-bg: #FFFBEB;
+      --advisory-border: #FDE68A;
+      --advisory-ink: #78350F;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+    .mono-inline { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 13.5px; }
+
+    /* Top Bar Contract: Exact 3 Zones, Single Row */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .brand-mark {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .top-nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding: 0.25rem 0;
+      border-bottom: 2px solid transparent;
+      transition: color 150ms ease, border-color 150ms ease;
+    }
+    .top-nav a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #FFFFFF;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 1.1rem;
+      font: 600 0.88rem/1.2 var(--font-sans);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-height: 40px;
+      transition: background-color 150ms ease;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.95rem;
+      font: 600 0.85rem/1.2 var(--font-sans);
+      cursor: pointer;
+      white-space: nowrap;
+      min-height: 40px;
+      transition: background-color 150ms ease, border-color 150ms ease;
+    }
+    .btn-secondary:hover { background: var(--surface-subtle); border-color: var(--accent); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.85rem;
+      font: 600 0.82rem/1.2 var(--font-sans);
+      cursor: pointer;
+      white-space: nowrap;
+      min-height: 36px;
+      transition: background-color 150ms ease, color 150ms ease;
+    }
+    .btn-ghost:hover { background: var(--surface-subtle); color: var(--ink); }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Page Intro Band */
+    .intro-band {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .intro-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 1.35rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.25rem;
+    }
+    .intro-copy { max-width: 68ch; }
+    .intro-meta {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      margin-bottom: 0.35rem;
+    }
+    .intro-copy h1 {
+      margin: 0 0 0.45rem;
+      font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+      color: var(--ink);
+    }
+    .intro-copy p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--ink-secondary);
+    }
+    .preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .preset-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      margin-right: 0.25rem;
+    }
+
+    /* Asymmetric Split Workspace */
+    .workspace {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* Form Sections */
+    .form-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.35rem 1.4rem;
+      margin-bottom: 1.15rem;
+      scroll-margin-top: 76px;
+    }
+    .section-head {
+      padding-bottom: 0.85rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-kicker {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+    .section-head p {
+      margin: 0.25rem 0 0;
+      font-size: 0.86rem;
+      color: var(--ink-muted);
+    }
+
+    .subsection-title {
+      margin: 1.15rem 0 0.65rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--surface-subtle);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem 1rem;
+    }
+    .field-grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      min-width: 0;
+    }
+    .field.span-2 { grid-column: span 2; }
+    .field label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+    .field .unit {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 400;
+      color: var(--ink-muted);
+    }
+    .field input[type="number"],
+    .field select {
+      width: 100%;
+      min-height: 40px;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      background: #FFFFFF;
+      color: var(--ink);
+      font: 500 0.9rem/1.3 var(--font-sans);
+      transition: border-color 150ms ease;
+    }
+    .field input[type="number"] {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+    .field input[type="number"]:hover,
+    .field select:hover { border-color: var(--accent); }
+    .field-hint {
+      font-size: 0.76rem;
+      color: var(--ink-muted);
+      line-height: 1.35;
+    }
+
+    /* Derived Readout Bar */
+    .derived-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 1.1rem;
+      padding-top: 0.95rem;
+      border-top: 1px solid var(--border);
+    }
+    .derived-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .derived-label {
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+      font-weight: 500;
+    }
+    .derived-value {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* Inline eGFR Helper */
+    .inline-helper {
+      margin-top: 0.85rem;
+      padding: 0.75rem 0.9rem;
+      background: var(--surface-subtle);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 0.75rem;
+    }
+    .inline-helper .field { flex: 1 1 180px; }
+    .inline-helper .helper-note {
+      flex: 1 1 100%;
+      font-size: 0.78rem;
+      color: var(--ink-secondary);
+      font-family: var(--font-mono);
+    }
+
+    /* Checkbox Matrix */
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.55rem 0.9rem;
+      margin-top: 0.5rem;
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      padding: 0.45rem 0.55rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background-color 140ms ease;
+    }
+    .check-item:hover { background: var(--surface-subtle); }
+    .check-item input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      margin: 2px 0 0;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .check-item span {
+      font-size: 0.85rem;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+    .check-item small {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      margin-top: 1px;
+    }
+    .is-muted-field { opacity: 0.48; }
+
+    /* Form Action Bar */
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.4rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    /* Sticky Right Results Stage */
+    .results-column {
+      position: sticky;
+      top: 76px;
+      min-width: 0;
+    }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .summary-cell {
+      padding: 1rem 1.05rem;
+      border-right: 1px solid var(--border);
+      min-width: 0;
+    }
+    .summary-cell:last-child { border-right: 0; }
+    .summary-label {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      margin-bottom: 0.25rem;
+    }
+    .summary-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+    }
+    .summary-meta {
+      font-size: 0.74rem;
+      color: var(--ink-secondary);
+      line-height: 1.4;
+    }
+
+    .tone-low { color: var(--tone-low); }
+    .tone-moderate { color: var(--tone-moderate); }
+    .tone-high { color: var(--tone-high); }
+    .tone-very-high { color: var(--tone-very-high); }
+    .tone-extreme { color: var(--tone-extreme); }
+    .tone-neutral { color: var(--ink-secondary); }
+
+    /* Results Filter Toolbar */
+    .results-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .segmented-tabs {
+      display: inline-flex;
+      padding: 3px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      gap: 2px;
+    }
+    .seg-btn {
+      background: transparent;
+      border: 0;
+      border-radius: 5px;
+      padding: 0.4rem 0.75rem;
+      font: 600 0.82rem/1.2 var(--font-sans);
+      color: var(--ink-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 140ms ease, color 140ms ease;
+    }
+    .seg-btn:hover { color: var(--ink); }
+    .seg-btn.is-active {
+      background: var(--surface);
+      color: var(--accent);
+      box-shadow: 0 1px 2px rgba(14, 35, 40, 0.08);
+    }
+
+    /* Comparison Chart Card */
+    .chart-card, .protocol-card, .empty-stage {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.35rem;
+      margin-bottom: 1rem;
+    }
+    .risk-chart-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .chart-caption {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      margin-top: 0.45rem;
+    }
+
+    /* Protocol Result Cards */
+    .protocol-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 0.9rem;
+      margin-bottom: 0.95rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .protocol-kicker {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      margin-bottom: 0.15rem;
+    }
+    .protocol-header h3 {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+    .protocol-headline { text-align: right; flex-shrink: 0; }
+    .headline-value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+    .headline-sub {
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+      margin-top: 0.15rem;
+    }
+
+    .target-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      padding-bottom: 0.95rem;
+      margin-bottom: 0.95rem;
+      border-bottom: 1px solid var(--surface-subtle);
+    }
+    .target-label {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      margin-bottom: 0.15rem;
+    }
+    .target-val {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .clinical-guidance {
+      margin: 0 0 0.75rem;
+      font-size: 0.87rem;
+      color: var(--ink-secondary);
+      line-height: 1.5;
+    }
+    .detail-block {
+      margin-top: 0.85rem;
+    }
+    .detail-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .detail-body {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--ink-secondary);
+    }
+    .factor-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem 1rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--surface-subtle);
+    }
+
+    .submodel-block {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--surface-subtle);
+    }
+    .submodel-block:first-of-type { padding-top: 0; }
+    .submodel-block:last-of-type { border-bottom: 0; padding-bottom: 0; }
+    .submodel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.45rem;
+    }
+    .submodel-metric {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    /* Data Table for PREVENT */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.6rem 0;
+      font-size: 0.85rem;
+    }
+    .data-table th, .data-table td {
+      padding: 0.45rem 0.5rem;
+      border-bottom: 1px solid var(--surface-subtle);
+      text-align: left;
+    }
+    .data-table th {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      border-bottom-color: var(--border);
+    }
+    .data-table th.num, .data-table td.num { text-align: right; }
+
+    .clean-list, .note-list {
+      margin: 0.35rem 0 0;
+      padding-left: 1.15rem;
+      font-size: 0.84rem;
+      color: var(--ink-secondary);
+    }
+    .clean-list li, .note-list li { margin-bottom: 0.25rem; }
+    .note-list { font-size: 0.8rem; color: var(--ink-muted); }
+    .muted-note, .muted-text {
+      margin: 0.2rem 0 0;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+
+    .advisory-box {
+      margin-top: 0.95rem;
+      padding: 0.8rem 0.95rem;
+      background: var(--advisory-bg);
+      border: 1px solid var(--advisory-border);
+      border-radius: var(--radius-sm);
+      color: var(--advisory-ink);
+    }
+    .advisory-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .advisory-box .clean-list { color: var(--advisory-ink); }
+
+    .alert-panel {
+      padding: 1rem 1.15rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
+    }
+    .alert-danger {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-ink);
+    }
+    .alert-panel h2 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .alert-panel p, .alert-panel .clean-list {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--danger-ink);
+    }
+
+    a { color: var(--accent); }
+
+    /* Methodology & Sources Footer */
+    .methodology-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+    }
+    .methodology-details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.35rem;
+      margin-bottom: 1rem;
+    }
+    .methodology-details summary {
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .methodology-details p, .methodology-details li {
+      font-size: 0.85rem;
+      color: var(--ink-secondary);
+    }
+    footer {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      padding-top: 0.5rem;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1080px) {
+      .workspace { grid-template-columns: 1fr; }
+      .results-column { position: static; }
+    }
+    @media (max-width: 720px) {
+      .top-nav { display: none; }
+      .topbar-inner, .intro-inner, .workspace, .methodology-wrap { padding-left: 1rem; padding-right: 1rem; }
+      .field-grid, .field-grid.cols-3, .check-grid, .summary-strip, .target-grid, .factor-columns {
+        grid-template-columns: 1fr;
+      }
+      .field.span-2 { grid-column: span 1; }
+      .derived-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .summary-cell { border-right: 0; border-bottom: 1px solid var(--border); }
+      .summary-cell:last-child { border-bottom: 0; }
+    }
+
+    @media print {
+      .topbar, .preset-bar, .form-column, .results-toolbar, .methodology-details { display: none !important; }
+      body { background: #FFFFFF; }
+      .workspace { display: block; padding: 0; }
+      .results-column { position: static; }
+      .protocol-card, .summary-strip, .chart-card { break-inside: avoid; border-color: #CBD5E1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Navigation Bar (Strict 3-zone contract) -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#top" class="brand-mark">Lipid Clinical Companion</a>
+      <nav class="top-nav" aria-label="Protocol sections">
+        <a href="#sec-core">Core Profile</a>
+        <a href="#sec-ascvd">ASCVD</a>
+        <a href="#sec-qrisk3">QRISK3</a>
+        <a href="#sec-lai">LAI 2023</a>
+      </nav>
+      <button type="button" class="btn-primary" id="top-assess-btn">Assess All Risks</button>
+    </div>
+  </header>
+
+  <!-- Clinical Header & Presets Band -->
+  <section class="intro-band" id="top">
+    <div class="intro-inner">
+      <div class="intro-copy">
+        <div class="intro-meta">ASCVD (PCE · PREVENT · ACC Lifetime) · QRISK3 (2017 10-Yr · Lifetime) · LAI 2023 Consensus IV</div>
+        <h1>Multi-Protocol Cardiovascular Risk Assessment</h1>
+        <p>Enter clinical parameters once to compute parallel risk estimates across the ACC/AHA ASCVD protocol, the full 22-variable QRISK3 protocol, and the Lipid Association of India 2023 Consensus IV protocol.</p>
+      </div>
+      <div class="preset-bar" role="group" aria-label="Clinical validation presets">
+        <span class="preset-label">Validation cases:</span>
+        <button type="button" class="btn-secondary" data-preset="indianPrimary">Primary Prevention (42M)</button>
+        <button type="button" class="btn-secondary" data-preset="diabeticMetabolic">Diabetic + Metabolic (56F)</button>
+        <button type="button" class="btn-secondary" data-preset="secondaryExtreme">Secondary Prevention (61M)</button>
+      </div>
+    </div>
+  </section>
+
+  <noscript>
+    <div class="methodology-wrap" style="padding-top:1rem">
+      <div class="alert-panel alert-danger">JavaScript is required to run the cardiovascular risk equations.</div>
+    </div>
+  </noscript>
+
+  <main class="workspace">
+    <!-- LEFT COLUMN: Unified Clinical Input Console -->
+    <form id="risk-form" class="form-column" novalidate>
+
+      <!-- SECTION 1: SHARED CORE CLINICAL PROFILE -->
+      <section class="form-section" id="sec-core">
+        <div class="section-head">
+          <div class="section-kicker">01. Shared Foundation · Used by ASCVD, QRISK3, and LAI 2023</div>
+          <h2>Core Clinical Profile</h2>
+          <p>Demographics, blood pressure, lipids, anthropometrics, diabetes, tobacco exposure, kidney stage, and established disease.</p>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="age">Age <span class="unit">years</span></label>
+            <input id="age" name="age" type="number" min="18" max="100" step="1" inputmode="numeric" required placeholder="18–100">
+            <span class="field-hint">PCE 40–79 · PREVENT 30–79 · QRISK3 25–84 · LAI ≥18</span>
+          </div>
+          <div class="field">
+            <label for="sex">Biological Sex</label>
+            <select id="sex" name="sex" required>
+              <option value="">Select</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="ethnicity">Ethnicity / Ancestry <span class="unit">QRISK3 &amp; PCE</span></label>
+            <select id="ethnicity" name="ethnicity">
+              <option value="2" selected>Indian</option>
+              <option value="3">Pakistani</option>
+              <option value="4">Bangladeshi</option>
+              <option value="5">Other Asian</option>
+              <option value="1">White or not stated</option>
+              <option value="6">Black Caribbean</option>
+              <option value="7">Black African</option>
+              <option value="8">Chinese</option>
+              <option value="9">Other ethnic group</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ascvd">Established Clinical ASCVD</label>
+            <select id="ascvd" name="ascvd">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes (CAD, MI, ACS, Stroke/TIA, PAD)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="heightCm">Height <span class="unit">cm</span></label>
+            <input id="heightCm" name="heightCm" type="number" min="100" max="240" step="0.1" inputmode="decimal" placeholder="e.g. 172">
+          </div>
+          <div class="field">
+            <label for="weightKg">Weight <span class="unit">kg</span></label>
+            <input id="weightKg" name="weightKg" type="number" min="25" max="250" step="0.1" inputmode="decimal" placeholder="e.g. 76">
+          </div>
+
+          <div class="field">
+            <label for="sbp">Office Systolic BP <span class="unit">mmHg</span></label>
+            <input id="sbp" name="sbp" type="number" min="60" max="300" step="1" inputmode="numeric" placeholder="e.g. 128">
+          </div>
+          <div class="field">
+            <label for="dbp">Office Diastolic BP <span class="unit">mmHg</span></label>
+            <input id="dbp" name="dbp" type="number" min="30" max="200" step="1" inputmode="numeric" placeholder="e.g. 78">
+          </div>
+
+          <div class="field">
+            <label for="bpTx">Antihypertensive Treatment</label>
+            <select id="bpTx" name="bpTx">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="statin">Statin / Lipid-Lowering Therapy</label>
+            <select id="statin" name="statin">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="tc">Total Cholesterol <span class="unit">mg/dL</span></label>
+            <input id="tc" name="tc" type="number" min="40" max="1500" step="any" inputmode="decimal" placeholder="e.g. 204">
+          </div>
+          <div class="field">
+            <label for="hdl">HDL-C <span class="unit">mg/dL</span></label>
+            <input id="hdl" name="hdl" type="number" min="5" max="250" step="any" inputmode="decimal" placeholder="e.g. 44">
+          </div>
+
+          <div class="field">
+            <label for="ldl">LDL-C <span class="unit">mg/dL</span></label>
+            <input id="ldl" name="ldl" type="number" min="0" max="1200" step="any" inputmode="decimal" placeholder="e.g. 134">
+          </div>
+          <div class="field">
+            <label for="ckdStage">Chronic Kidney Disease (CKD) Stage</label>
+            <select id="ckdStage" name="ckdStage">
+              <option value="none">None / Stage 1–2</option>
+              <option value="3a">CKD Stage 3a (eGFR 45–59)</option>
+              <option value="3b">CKD Stage 3b (eGFR 30–44)</option>
+              <option value="4">CKD Stage 4 (eGFR 15–29)</option>
+              <option value="5">CKD Stage 5 (eGFR &lt;15 / dialysis)</option>
+            </select>
+            <span class="field-hint">QRISK3 uses Stage 3–5 · LAI high-risk feature is Stage 3b or 4</span>
+          </div>
+
+          <div class="field">
+            <label for="smokeCat">Combustible Smoking Status <span class="unit">QRISK3 / ASCVD</span></label>
+            <select id="smokeCat" name="smokeCat">
+              <option value="">Unknown</option>
+              <option value="1">Non-smoker</option>
+              <option value="2">Ex-smoker</option>
+              <option value="3">Light smoker (&lt;10 cig/day)</option>
+              <option value="4">Moderate smoker (10–19 cig/day)</option>
+              <option value="5">Heavy smoker (≥20 cig/day)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="smokelessTobacco">Smokeless / Cultural Tobacco <span class="unit">LAI</span></label>
+            <select id="smokelessTobacco" name="smokelessTobacco">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes (bidis, paan, gutka, khaini)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="dmStatus">Diabetes Status <span class="unit">Type 1 vs Type 2</span></label>
+            <select id="dmStatus" name="dmStatus">
+              <option value="">Unknown</option>
+              <option value="none">No diabetes</option>
+              <option value="t2">Type 2 diabetes</option>
+              <option value="t1">Type 1 diabetes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="dmTod">Diabetes Target-Organ Damage <span class="unit">LAI</span></label>
+            <select id="dmTod" name="dmTod">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes (retinopathy, nephropathy, neuropathy)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Live Calculated Clinical Indices -->
+        <div class="derived-strip" aria-live="polite">
+          <div class="derived-item">
+            <span class="derived-label">Calculated BMI</span>
+            <span class="derived-value" id="live-bmi">—</span>
+          </div>
+          <div class="derived-item">
+            <span class="derived-label">Non-HDL-C</span>
+            <span class="derived-value" id="live-nonhdl">—</span>
+          </div>
+          <div class="derived-item">
+            <span class="derived-label">TC / HDL-C Ratio</span>
+            <span class="derived-value" id="live-ratio">—</span>
+          </div>
+          <div class="derived-item">
+            <span class="derived-label">LAI 75th-Pct CACS Ref</span>
+            <span class="derived-value" id="live-cacs75">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: ASCVD PROTOCOL PARAMETERS -->
+      <section class="form-section" id="sec-ascvd">
+        <div class="section-head">
+          <div class="section-kicker">02. ASCVD Protocol · ACC/AHA PCE 2013 · AHA PREVENT 2024 · ACC Lifetime</div>
+          <h2>ASCVD &amp; PREVENT Renal-Metabolic Parameters</h2>
+          <p>eGFR is required for AHA PREVENT (10-year and 30-year). Optional HbA1c, UACR, and SDI automatically activate the enhanced PREVENT equations.</p>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="egfr">eGFR <span class="unit">mL/min/1.73m²</span></label>
+            <input id="egfr" name="egfr" type="number" min="15" max="150" step="1" inputmode="numeric" placeholder="Required for PREVENT (15–140)">
+          </div>
+          <div class="field">
+            <label for="pceRace">PCE 2013 Race Equation Mapping</label>
+            <select id="pceRace" name="pceRace">
+              <option value="auto" selected>Auto from Ethnicity</option>
+              <option value="white">White / Other (incl. South Asian)</option>
+              <option value="aa">African American</option>
+            </select>
+            <span class="field-hint" id="pce-race-auto-note">Active PCE stratum: White / Other equation</span>
+          </div>
+
+          <div class="field">
+            <label for="hba1c">HbA1c (optional) <span class="unit">%</span></label>
+            <input id="hba1c" name="hba1c" type="number" min="3.5" max="18" step="0.1" inputmode="decimal" placeholder="e.g. 6.4 (PREVENT enhanced)">
+          </div>
+          <div class="field">
+            <label for="uacr">Urine Albumin-to-Creatinine Ratio (optional) <span class="unit">mg/g</span></label>
+            <input id="uacr" name="uacr" type="number" min="0.1" max="25000" step="any" inputmode="decimal" placeholder="e.g. 35 (PREVENT enhanced)">
+          </div>
+
+          <div class="field">
+            <label for="bmiDirect">Direct BMI Override (optional) <span class="unit">kg/m²</span></label>
+            <input id="bmiDirect" name="bmiDirect" type="number" min="12" max="70" step="0.1" inputmode="decimal" placeholder="Used only if Height/Weight blank">
+          </div>
+          <div class="field">
+            <label for="sdi">Social Deprivation Index Decile (optional) <span class="unit">1–10 US</span></label>
+            <input id="sdi" name="sdi" type="number" min="1" max="10" step="1" inputmode="numeric" placeholder="Leave blank outside US">
+          </div>
+        </div>
+
+        <div class="inline-helper">
+          <div class="field">
+            <label for="scrHelper">Quick CKD-EPI 2021 eGFR from Serum Creatinine <span class="unit">mg/dL</span></label>
+            <input id="scrHelper" name="scrHelper" type="number" min="0.2" max="15" step="0.01" inputmode="decimal" placeholder="e.g. 0.95">
+          </div>
+          <button type="button" class="btn-secondary" id="calc-egfr-btn">Compute eGFR</button>
+          <div class="helper-note" id="egfr-helper-note">Uses race-free 2021 CKD-EPI creatinine equation with Core Age &amp; Sex.</div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: QRISK3 PROTOCOL PARAMETERS -->
+      <section class="form-section" id="sec-qrisk3">
+        <div class="section-head">
+          <div class="section-kicker">03. QRISK3 Protocol · BMJ 2017 22-Variable Algorithm + Lifetime Reference</div>
+          <h2>QRISK3 Clinical History &amp; Variability Parameters</h2>
+          <p>All QRISK3-2017 comorbidities and medication predictors. Core age, sex, ethnicity, BMI, SBP, TC/HDL ratio, diabetes type, smoking, BP treatment, and CKD Stage 3–5 carry over automatically.</p>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="sbpSd">Systolic BP Variability — SD of ≥2 Readings <span class="unit">mmHg (optional)</span></label>
+            <input id="sbpSd" name="sbpSd" type="number" min="0" max="60" step="0.1" inputmode="decimal" placeholder="Blank → cohort mean (~8.8–9.0)">
+          </div>
+          <div class="field">
+            <label for="townsend">Townsend Deprivation Score <span class="unit">UK index (optional)</span></label>
+            <input id="townsend" name="townsend" type="number" min="-7" max="12" step="0.1" inputmode="decimal" placeholder="Blank → UK average (0.0)">
+          </div>
+        </div>
+
+        <div class="subsection-title">QRISK3-2017 Comorbidities &amp; Medications</div>
+        <div class="check-grid">
+          <label class="check-item">
+            <input type="checkbox" name="qrFhCvd">
+            <span>Angina or heart attack in 1st-degree relative &lt;60 yrs<small>QRISK3 family history definition</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="qrAF">
+            <span>Atrial fibrillation<small>Diagnosed AF</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="qrMigraine">
+            <span>Migraine<small>Diagnosed migraine</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="qrRA">
+            <span>Rheumatoid arthritis<small>Also counted as LAI inflammatory modifier</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="qrSLE">
+            <span>Systemic lupus erythematosus (SLE)<small>Diagnosed SLE</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="qrSMI">
+            <span>Severe mental illness<small>Schizophrenia, bipolar disorder, or moderate/severe depression</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="qrAtypicalAntipsy">
+            <span>On atypical antipsychotic medication<small>Regular prescription</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="qrSteroids">
+            <span>On regular oral corticosteroid tablets<small>Systemic steroid therapy</small></span>
+          </label>
+          <label class="check-item" id="field-qr-ed">
+            <input type="checkbox" name="qrED">
+            <span>Erectile dysfunction (diagnosis or treatment)<small>Male patients only</small></span>
+          </label>
+        </div>
+
+        <div class="subsection-title">QRISK3-Lifetime Reference (Optional — Used by LAI Figure 1)</div>
+        <div class="field-grid">
+          <div class="field">
+            <label for="qrLifetime">Official QRISK3-Lifetime CVD Risk <span class="unit">%</span></label>
+            <input id="qrLifetime" name="qrLifetime" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="From qrisk.org/lifetime/">
+            <span class="field-hint"><a href="https://qrisk.org/lifetime/" target="_blank" rel="noopener noreferrer">Open official QRISK3-lifetime calculator</a> (&gt;30% reclassifies LAI Low → Moderate)</span>
+          </div>
+          <div class="field">
+            <label for="qrEndAge">QRISK3-Lifetime End Age <span class="unit">years</span></label>
+            <input id="qrEndAge" name="qrEndAge" type="number" min="26" max="100" step="1" inputmode="numeric" placeholder="e.g. 85 or 95">
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: LAI 2023 CONSENSUS IV PARAMETERS -->
+      <section class="form-section" id="sec-lai">
+        <div class="section-head">
+          <div class="section-kicker">04. LAI 2023 Protocol · Consensus Statement IV (Figures 1–5, Tables 1–3)</div>
+          <h2>LAI High-Risk Features, Vascular Imaging &amp; Risk Modifiers</h2>
+          <p>Subclinical atherosclerosis, extreme-risk indicators, lipid biomarkers, and all 10 LAI Figure 1 risk modifiers.</p>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="plaque">Subclinical Plaque or ABI &lt;0.9</label>
+            <select id="plaque" name="plaque">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes (carotid, femoral, coronary plaque, or ABI &lt;0.9)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fh">Familial Hypercholesterolaemia (FH)</label>
+            <select id="fh" name="fh">
+              <option value="unknown">Unknown</option>
+              <option value="no">No</option>
+              <option value="het">Heterozygous FH (Very high)</option>
+              <option value="hom">Homozygous FH (Extreme A/B)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="recurrent">Recurrent ACS or Polyvascular Disease</label>
+            <select id="recurrent" name="recurrent">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes (triggers Extreme Category B)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="catC">Recurrent ASCVD Despite LDL-C ~30 mg/dL</label>
+            <select id="catC" name="catC">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes (Extreme Category C)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="cac">Coronary Artery Calcium Score (CACS) <span class="unit">Agatston</span></label>
+            <input id="cac" name="cac" type="number" min="0" max="100000" step="any" inputmode="decimal" placeholder="Blank if untested">
+            <span class="field-hint">0 · 1–99 · 100–299 (Very high) · ≥300 (Extreme A)</span>
+          </div>
+          <div class="field">
+            <label for="cacPct">CACS Percentile (optional if CACS 1–99) <span class="unit">0–100</span></label>
+            <input id="cacPct" name="cacPct" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="Auto from LAI Tables 1–2 if blank">
+          </div>
+        </div>
+
+        <div class="subsection-title">LAI High-Risk Features (Figure 1, Column 2)</div>
+        <div class="field-grid">
+          <div class="field">
+            <label for="laiFamily">Premature ASCVD in 1st-Degree Relative</label>
+            <select id="laiFamily" name="laiFamily">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes (Male &lt;55 / Female &lt;65 or pre-menopause)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="heavySmokingOver1Pack">Regular Smoking &gt;1 Pack/Day</label>
+            <select id="heavySmokingOver1Pack" name="heavySmokingOver1Pack">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes (&gt;20 cigarettes/day — extreme single factor)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="apoB">Apolipoprotein B (ApoB) <span class="unit">mg/dL</span></label>
+            <input id="apoB" name="apoB" type="number" min="0" max="500" step="any" inputmode="decimal" placeholder="&gt;130 = high-risk feature">
+          </div>
+          <div class="field">
+            <label for="lpa">Lipoprotein(a) — Lp(a) <span class="unit">mg/dL only</span></label>
+            <input id="lpa" name="lpa" type="number" min="0" max="600" step="any" inputmode="decimal" placeholder="20–49 modifier · ≥50 high-risk">
+          </div>
+
+          <div class="field">
+            <label for="metSyndrome">Metabolic Syndrome</label>
+            <select id="metSyndrome" name="metSyndrome">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="nafldFibrosis">NAFLD / MASLD with Fibrosis Grade 2 or 3</label>
+            <select id="nafldFibrosis" name="nafldFibrosis">
+              <option value="">Unknown</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="subsection-title">LAI Risk Modifiers (Figure 1, Column 3 — All 10 Modifiers)</div>
+        <div class="field-grid cols-3">
+          <div class="field">
+            <label for="fbg">Fasting Blood Glucose <span class="unit">mg/dL</span></label>
+            <input id="fbg" name="fbg" type="number" min="40" max="600" step="any" inputmode="decimal" placeholder="100–125 = IFG">
+          </div>
+          <div class="field">
+            <label for="waistCm">Waist Circumference <span class="unit">cm</span></label>
+            <input id="waistCm" name="waistCm" type="number" min="40" max="200" step="0.5" inputmode="decimal" placeholder="&gt;90 M / &gt;80 F">
+          </div>
+          <div class="field">
+            <label for="hsCRP">hsCRP (2× ≥2 wks apart) <span class="unit">mg/L</span></label>
+            <input id="hsCRP" name="hsCRP" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="&gt;2.0 = modifier">
+          </div>
+
+          <div class="field">
+            <label for="triglycerides">Plasma Triglycerides <span class="unit">mg/dL</span></label>
+            <input id="triglycerides" name="triglycerides" type="number" min="20" max="5000" step="1" inputmode="numeric" placeholder="&gt;150 fast / &gt;175 non-fast">
+          </div>
+          <div class="field">
+            <label for="tgState">Triglyceride Sample State</label>
+            <select id="tgState" name="tgState">
+              <option value="fasting" selected>Fasting (&gt;150 mg/dL)</option>
+              <option value="nonfasting">Non-fasting (&gt;175 mg/dL)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Lp(a) 20–49 mg/dL</label>
+            <span class="field-hint" style="padding-top:0.5rem">Auto-evaluated from Lp(a) field above.</span>
+          </div>
+        </div>
+
+        <div class="check-grid" style="margin-top:0.85rem">
+          <label class="check-item">
+            <input type="checkbox" name="laiInflammatory">
+            <span>Psoriasis or spondyloarthropathies<small>RA is also auto-included from QRISK3</small></span>
+          </label>
+          <label class="check-item" id="field-lai-female">
+            <input type="checkbox" name="laiFemaleSpecific">
+            <span>Female-specific reproductive risk enhancers<small>Premature menopause (&lt;45y), pre-eclampsia, GDM, or PCOS</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="laiHighPRS">
+            <span>High polygenic risk score (PRS)<small>Top risk percentile if genotyped</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="laiAirPollution">
+            <span>Chronic high air pollution exposure (PM₂.₅)<small>Sustained elevated urban/ambient exposure</small></span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="laiHIV">
+            <span>HIV infection<small>Human immunodeficiency virus</small></span>
+          </label>
+        </div>
+      </section>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Assess All Risks</button>
+        <button type="reset" class="btn-secondary">Clear All Fields</button>
+      </div>
+    </form>
+
+    <!-- RIGHT COLUMN: Multi-Protocol Calculated Risk Results -->
+    <aside class="results-column" id="results-stage" aria-live="polite" aria-label="Calculated Cardiovascular Risk Results">
+      <section class="empty-stage">
+        <h2>Loading Assessment…</h2>
+        <p>Enter patient parameters and click Assess All Risks to generate ASCVD, QRISK3, and LAI 2023 Consensus IV results.</p>
+      </section>
+    </aside>
+  </main>
+
+  <div class="methodology-wrap">
+    <details class="methodology-details">
+      <summary>Protocol Equations, Clinical Calibration &amp; Source References</summary>
+      <ul>
+        <li><strong>LAI 2023 Consensus IV:</strong> Puri R, Bansal M, Mehta V, Duell PB, Wong ND, et al. <em>Lipid Association of India 2023 update on cardiovascular risk assessment and lipid management in Indian patients: Consensus statement IV.</em> J Clin Lipidol. 2024;18(3):e351–e373 (<a href="https://doi.org/10.1016/j.jacl.2024.01.006" target="_blank" rel="noopener noreferrer">DOI</a>). Implements Figures 1–5, Tables 1–2 (MESA/CARDIA 75th-percentile CACS thresholds extrapolated for Indians), and Table 3 lipid targets.</li>
+        <li><strong>ASCVD Protocol — ACC/AHA PCE (2013):</strong> Goff DC Jr, Lloyd-Jones DM, et al. <em>Circulation</em>. 2014;129:S49–S73. Sex- and race-specific 10-year hard ASCVD Cox models (ages 40–79) plus ACC/AHA legacy lifetime risk strata (ages 20–59).</li>
+        <li><strong>ASCVD Protocol — AHA PREVENT (2024):</strong> Khan SS, Matsushita K, Sang Y, et al. <em>Circulation</em>. 2024;149(6):430–449. Race-free 10-year (ages 30–79) and 30-year (ages 30–59) Base and Enhanced (HbA1c, UACR, SDI, Full) models for ASCVD, Total CVD, Heart Failure, CHD, and Stroke.</li>
+        <li><strong>QRISK3 Protocol (2017):</strong> Hippisley-Cox J, Coupland C, Brindle P. <em>BMJ</em>. 2017;357:j2099. Open-source 22-variable sex-specific Cox proportional hazards algorithm (ages 25–84) with fractional polynomials and age interactions, alongside optional <a href="https://qrisk.org/lifetime/" target="_blank" rel="noopener noreferrer">QRISK3-lifetime</a> entry.</li>
+      </ul>
+    </details>
+    <footer>
+      <strong>For clinician decision-support and validation use only.</strong> Does not replace clinical judgment, source publications, or local emergency pathways. All calculations execute strictly inside your browser; no patient data is stored or transmitted.
+    </footer>
+  </div>
+
+  <script defer src="/js/prevent-coeffs.js"></script>
+  <script defer src="/js/risk-engines.js"></script>
+  <script defer src="/js/app.js"></script>
+</body>
+</html>
